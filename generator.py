@@ -1,43 +1,36 @@
+from internal_generator import InternalRandom
 import requests
 import json
 import os #Import os to secure our APIKEY as env variable
 
 class RandomNumberGenerator:
     def __init__(self):
-        self.API_KEY = os.environ.get("RANDOM_NUM_API_KEY") 
-        self.url = "https://api.random.org/json-rpc/4/invoke"
-
-        if not self.API_KEY:
-            print("API KEY had not been set in the OS")
-            
-
+        self.url = "https://www.random.org/integers/"
+        self.internal_num = InternalRandom()
 
     def generate_random_integers(self):
-        payload = {
-            "jsonrpc": "2.0",
-            "method": "generateIntegers",
-            "params" : {
-                "apiKey": self.API_KEY,
-                "n": 4,
-                "min": 0,
-                "max": 7,
-                "base": 10,
-                "replacement": True,
-            },
-            "id":1
+        params = {
+            "num": 4,        # Number of integers requested
+            "min": 0,        # The smallest value returned
+            "max": 7,        # The largest value returned
+            "col": 1,        # Number of columns used to display the returned values
+            "base": 10,      # Use base 10 system
+            "format": "plain",  # Returns response in a plain text
+            "rnd": "new"     # Generate a new random numbers
         }
         try:
-            response = requests.post(self.url,json=payload)
-            response.raise_for_status() # Raise an HTTPError for bad responses (4xx or 5xx)
-            response_json = response.json()
+            response = requests.get(self.url,params=params)
 
-            # print(response_json)
-            if "result" in response_json:
-                random_data = response_json["result"]["random"]["data"]
+            if response.status_code == 200:
+                numbers = response.text.strip().split('\n') # .strip() to remove any whitespace, .split('\n') create a list 
+                random_data = [int(num) for num in numbers]
                 return random_data
             else:
-                print("Error: 'result' key not found in the response.")
-                return None
+                with open("error.log", "a") as f: #append error into error.log
+                    f.write(f"\n Error: {response.status_code}")
+                
+                #return list of random generated number without using API
+                return (self.internal_num.internal_number())
                 
         except requests.exceptions.RequestException as e:
             print(f"Error calling random.org API: {e}")

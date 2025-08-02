@@ -1,6 +1,6 @@
 class GuessChecker:
 
-    def checklocation(self, user_list, random_list):
+    def feedback_provider(self, user_list, random_list):
             correct_location = 0
             correct_number = 0
 
@@ -38,5 +38,5 @@ class GuessChecker:
             return True
             
         else:
-            self.checklocation(user_input_list,random_generated_number)
+            self.feedback_provider(user_input_list,random_generated_number)
             return False
