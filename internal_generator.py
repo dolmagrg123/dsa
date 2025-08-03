@@ -2,7 +2,7 @@ import random
 
 class InternalRandom:
 
-    def __init__(self):
+    def __init__(self, num, min, max):
         self.num = 4
         self.min = 0
         self.max = 7

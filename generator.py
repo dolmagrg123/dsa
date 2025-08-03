@@ -6,8 +6,9 @@ import os #Import os to secure our APIKEY as env variable
 class RandomNumberGenerator:
     def __init__(self):
         self.url = "https://www.random.org/integers/"
-        self.internal_num = InternalRandom()
-
+        self.internal_num = InternalRandom(4,0,7)
+        
+#parmas under init???
     def generate_random_integers(self):
         params = {
             "num": 4,        # Number of integers requested
@@ -30,7 +31,7 @@ class RandomNumberGenerator:
                     f.write(f"\n Error: {response.status_code}")
                 
                 #return list of random generated number without using API
-                return (self.internal_num.internal_number())
+                return (self.internal_num.internal_number(4,0,7))
                 
         except requests.exceptions.RequestException as e:
             print(f"Error calling random.org API: {e}")
