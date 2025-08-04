@@ -3,9 +3,9 @@ import random
 class InternalRandom:
 
     def __init__(self, num, min, max):
-        self.num = 4
-        self.min = 0
-        self.max = 7
+        self.num = num
+        self.min = min
+        self.max = max
         
     def internal_number(self):
         print("Generating random number internally!!!")

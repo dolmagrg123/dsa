@@ -4,16 +4,19 @@ import json
 import os #Import os to secure our APIKEY as env variable
 
 class RandomNumberGenerator:
-    def __init__(self):
+    def __init__(self, num, min, max):
         self.url = "https://www.random.org/integers/"
-        self.internal_num = InternalRandom(4,0,7)
+        self.num = num
+        self.min = min
+        self.max = max
+        self.internal_num = InternalRandom(self.num, self.min, self.max)
         
 #parmas under init???
     def generate_random_integers(self):
         params = {
-            "num": 4,        # Number of integers requested
-            "min": 0,        # The smallest value returned
-            "max": 7,        # The largest value returned
+            "num": self.num,        # Number of integers requested
+            "min": self.min,        # The smallest value returned
+            "max": self.max,        # The largest value returned
             "col": 1,        # Number of columns used to display the returned values
             "base": 10,      # Use base 10 system
             "format": "plain",  # Returns response in a plain text
@@ -31,7 +34,7 @@ class RandomNumberGenerator:
                     f.write(f"\n Error: {response.status_code}")
                 
                 #return list of random generated number without using API
-                return (self.internal_num.internal_number(4,0,7))
+                return (self.internal_num.internal_number(self.num, self.min, self.max))
                 
         except requests.exceptions.RequestException as e:
             print(f"Error calling random.org API: {e}")
