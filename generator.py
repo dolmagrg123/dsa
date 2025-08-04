@@ -1,7 +1,9 @@
 from internal_generator import InternalRandom
 import requests
 import json
-import os #Import os to secure our APIKEY as env variable
+import datetime
+#Import os to secure our APIKEY as env variable
+# import os 
 
 class RandomNumberGenerator:
     def __init__(self, num, min, max):
@@ -31,10 +33,10 @@ class RandomNumberGenerator:
                 return random_data
             else:
                 with open("error.log", "a") as f: #append error into error.log
-                    f.write(f"\n Error: {response.status_code}")
+                    f.write(f"\n API_URL ERROR: Date and Time: {datetime.datetime.now()} \n Error Code: {response.status_code}")
                 
                 #return list of random generated number without using API
-                return (self.internal_num.internal_number(self.num, self.min, self.max))
+                return (self.internal_num.internal_number())
                 
         except requests.exceptions.RequestException as e:
             print(f"Error calling random.org API: {e}")
