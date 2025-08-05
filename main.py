@@ -4,14 +4,12 @@ from input_validation import InputValidation
 from level_manager import LevelManager
 
 class Game:
-
     def __init__(self):
         self.level_manager = LevelManager()
         self.generator = None
         self.user_input = None
         self.remaining_guesses = 10
         self.target_combination  = None
-
 
     def start_game(self):
         #set values of num, min, max based on the level user chooses
@@ -38,9 +36,7 @@ class Game:
             else:
                 print(f"The correct combination is {self.target_combination}")
                 print("Sorry!!! You ran out of guesses. Please TRY AGAIN")
-        
-        
-        
+           
 
 if __name__ == "__main__":
     game = Game()

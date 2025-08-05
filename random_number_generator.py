@@ -1,7 +1,7 @@
 from internal_generator import InternalGenerator
 import requests
-import json
 import datetime
+# import json
 #Import os to secure our APIKEY as env variable
 # import os 
 
@@ -12,8 +12,7 @@ class RandomNumberGenerator:
         self.min = min
         self.max = max
         self.internal_num = InternalGenerator(self.num, self.min, self.max)
-        
-#parmas under init???
+
     def generate_random_integers(self):
         params = {
             "num": self.num,        # Number of integers requested
@@ -28,13 +27,28 @@ class RandomNumberGenerator:
             response = requests.get(self.url,params=params)
 
             if response.status_code == 200:
-                numbers = response.text.strip().split('\n') # .strip() to remove any whitespace, .split('\n') create a list 
-                random_data = [int(num) for num in numbers] #converts the list of string into integers
-                return random_data
-            else:
-                with open("error.log", "a") as f: #append error into error.log
-                    f.write(f"\n API_URL ERROR: Date and Time: {datetime.datetime.now()} \n Error Code: {response.status_code}")
+                # cleanup the response and split with new line
+                numbers = response.text.strip().split('\n') 
+
+                random_data = []
+                for num in numbers:
+                    num = num.strip()
+                    if num.isdigit():
+                        random_data.append(int(num))
+                    else:
+                        with open("error.log", "a") as f: #append error into error.log
+                            f.write(f"\n Invalid value in server response: {num}")
+                if random_data:
+                    return random_data
+                else:
+                        with open("error.log", "a") as f:
+                            f.write(f"\n No valid numbers found in server response.")
+                        return None
                 
+            else:
+                with open("error.log", "a") as f:
+                    f.write(f"\n API_URL ERROR: Date and Time: {datetime.datetime.now()} \n Error Code: {response.status_code}")
+
                 #return list of random generated number without using API
                 return (self.internal_num.internal_number())
                 
