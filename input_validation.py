@@ -1,4 +1,4 @@
-class UserInput:
+class InputValidation:
 
     def __init__(self, num, min, max):
         self.num = num

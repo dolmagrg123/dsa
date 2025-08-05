@@ -128,3 +128,26 @@ https://api.random.org/json-rpc/4/basic
 
 ## Conclusion  
  
+
+
+ # Version 2:
+
+Issue:
+ The nested loops for finding correct numbers (those present but in the wrong location) have a time complexity of O(n^2), where n is the number of digits. 
+Change:
+ A more efficient approach would be to use frequency maps (dictionaries or counters) to count the occurrences of each digit in both the user's guess and the target combination. This would allow you to determine the number of correct digits in O(n) time.
+
+Key features of Counter:
+
+Dictionary-like interface: You can access the count of an item using dictionary-like syntax (e.g., frequency_map[2] would return 3). If an item is not in the collection, accessing its count returns 0 instead of raising a KeyError.
+Easy to update: You can update counts by adding new items or using the update() method.
+Useful methods: Counter provides useful methods like most_common() to get the most frequent items and their counts.
+Supports arithmetic operations: You can perform arithmetic operations (addition, subtraction, etc.) on Counter objects.
+The collections.Counter class makes it very easy to create frequency maps in Python. You just pass the iterable (list, string, etc.) to the Counter constructor:
+
+from collections import Counter
+
+my_list = [1, 2, 2, 3, 1, 4, 2]
+frequency_map = Counter(my_list)
+print(frequency_map)
+# Output: Counter({2: 3, 1: 2, 3: 1, 4: 1})

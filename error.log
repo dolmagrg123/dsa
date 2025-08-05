@@ -1,3 +1,18 @@
 
- Error: 404
- Error: 503
+
+ Error: 2025-08-04 00:59:24.847953 Code: 404
+ Error: 2025-08-04 00:59:33.302293 Code: 404
+ API ERROR: Date and Time: 2025-08-04 01:01:19.587051 
+ Error Code: 404
+ API_URL ERROR: Date and Time: 2025-08-04 01:01:44.725412 
+ Error Code: 404
+ API_URL ERROR: Date and Time: 2025-08-04 01:20:12.264587 
+ Error Code: 404
+ Invalid value in server response: abc
+ Invalid value in server response: 
+ No valid numbers found in server response.
+ API_URL ERROR: Date and Time: 2025-08-05 16:18:08.468814 
+ Error Code: 500
+ Invalid value in server response: abc
+ Invalid value in server response: 
+ No valid numbers found in server response.
