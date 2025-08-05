@@ -8,6 +8,7 @@ class LevelManager:
             "medium": (8, 0, 7)
         }
 
+    #Based on user input, this function will set num, min and max
     def choose_level(self):
         while True:
             level = input("Choose a level (easy, medium, difficult): ").lower()
@@ -34,7 +35,7 @@ class LevelManager:
             except ValueError:
                 print("Invalid input. Please enter a number for length.")
 
-
+    #calls choose_level function to get values of num, min and max and returns the values
     def get_settings(self):
         self.choose_level()
         return self.num, self.min, self.max

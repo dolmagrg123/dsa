@@ -1,6 +1,6 @@
 from collections import Counter
 
-class GuessChecker:
+class Checker:
 
     def __init__(self, user_guess_digits, target_digits):
         self.user_guess_digits = user_guess_digits

@@ -1,6 +1,6 @@
 import random
 
-class InternalRandom:
+class InternalGenerator:
 
     def __init__(self, num, min, max):
         self.num = num
@@ -10,5 +10,4 @@ class InternalRandom:
     def internal_number(self):
         print("Generating random number internally!!!")
         number = [random.randint(self.min, self.max) for _ in range(self.num)]
-        # print(f"Internally generated random number is{number}")
         return number

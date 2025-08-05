@@ -1,6 +1,6 @@
-from generator import RandomNumberGenerator
-from check import GuessChecker
-from input_validation import UserInput
+from random_number_generator import RandomNumberGenerator
+from check import Checker
+from input_validation import InputValidation
 from level_manager import LevelManager
 
 class Game:
@@ -14,17 +14,19 @@ class Game:
 
 
     def start_game(self):
+        #set values of num, min, max based on the level user chooses
         num, min, max = self.level_manager.get_settings()
 
         self.generator = RandomNumberGenerator(num,min,max)
         self.target_combination  = self.generator.generate_random_integers() # random number generated
-        self.user_input = UserInput(num,min,max) # combination guessed by user
+        self.user_input = InputValidation(num,min,max) # combination guessed by user
     
         while self.remaining_guesses > 0:
             self.remaining_guesses -= 1
             user_guess = self.user_input.input_validator()
 
-            checker = GuessChecker(user_guess,self.target_combination)
+            #pass the two list of random generated numbers and combination guessed by user
+            checker = Checker(user_guess,self.target_combination)
 
             is_correct, message = checker.correct_combination()
             print(message)  # Show feedback from GuessChecker
