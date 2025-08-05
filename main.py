@@ -20,18 +20,21 @@ class Game:
         self.target_combination  = self.generator.generate_random_integers() # random number generated
         self.user_input = UserInput(num,min,max) # combination guessed by user
     
-        for i in range(10):
+        while self.remaining_guesses > 0:
             self.remaining_guesses -= 1
             user_guess = self.user_input.input_validator()
 
             checker = GuessChecker(user_guess,self.target_combination)
 
-            if (checker.correct_combination()) == True:
+            is_correct, message = checker.correct_combination()
+            print(message)  # Show feedback from GuessChecker
+
+            if is_correct:
                 break
             elif self.remaining_guesses > 0:
-                print (f"You have {self.remaining_guesses} guesses remaining")
+                print(f"You have {self.remaining_guesses} guesses remaining")
             else:
-                print (f"The correct combination is {self.target_combination }")
+                print(f"The correct combination is {self.target_combination}")
                 print("Sorry!!! You ran out of guesses. Please TRY AGAIN")
         
         
