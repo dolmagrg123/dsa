@@ -6,18 +6,18 @@ import datetime
 # import os 
 
 class RandomNumberGenerator:
-    def __init__(self, num, min, max):
+    def __init__(self, num, min_val, max_val):
         self.url = "https://www.random.org/integers/"
         self.num = num
-        self.min = min
-        self.max = max
-        self.internal_num = InternalGenerator(self.num, self.min, self.max)
+        self.min_val = min_val
+        self.max_val = max_val
+        self.internal_num = InternalGenerator(self.num, self.min_val, self.max_val)
 
     def generate_random_integers(self):
         params = {
             "num": self.num,        # Number of integers requested
-            "min": self.min,        # The smallest value returned
-            "max": self.max,        # The largest value returned
+            "min_val": self.min_val,        # The smallest value returned
+            "max_val": self.max_val,        # The largest value returned
             "col": 1,        # Number of columns used to display the returned values
             "base": 10,      # Use base 10 system
             "format": "plain",  # Returns response in a plain text
@@ -39,6 +39,7 @@ class RandomNumberGenerator:
                         with open("error.log", "a") as f: #append error into error.log
                             f.write(f"\n Invalid value in server response: {num}")
                 if random_data:
+                    print(random_data)
                     return random_data
                 else:
                         with open("error.log", "a") as f:

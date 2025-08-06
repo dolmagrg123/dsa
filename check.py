@@ -11,7 +11,6 @@ class Checker:
                 correct_location = 0
                 correct_number = 0
 
-                #create copies of the list to avoid modifying the original list
                 user_counts = Counter(self.user_guess_digits )
                 target_counts  = Counter(self.target_digits)
 
@@ -30,18 +29,17 @@ class Checker:
                         user_counts[digit] -= 1
                         target_counts[digit] -= 1
                   
-                #print all incorrect if none of the numbers and location matches
                 if correct_number == 0 and correct_location == 0:
-                    return ("all incorrect")
+                    return 0, 0, "all incorrect"
                 else:
-                    return(f" {correct_number} correct number and {correct_location} correct location")
+                    return correct_number, correct_location, f"{correct_number} correct number and {correct_location} correct location"
             except ValueError as e:
-                return(f"Error processing input: {e}")
+                return 0, 0, f"Error processing input: {e}"
 
 
 
     def correct_combination(self):
         if self.target_digits == self.user_guess_digits:
-            return True, "Congratulations!!! You have guessed the correct combination"
+            return True
         else:
-            return False, self.feedback_provider()
+            return False

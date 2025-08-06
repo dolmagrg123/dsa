@@ -16,3 +16,7 @@
  Invalid value in server response: abc
  Invalid value in server response: 
  No valid numbers found in server response.
+ API_URL ERROR: Date and Time: 2025-08-06 16:01:03.952128 
+ Error Code: 503
+ API_URL ERROR: Date and Time: 2025-08-06 16:01:19.644214 
+ Error Code: 503
