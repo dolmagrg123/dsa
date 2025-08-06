@@ -1,21 +1,45 @@
-from generator import generate_random_integers
-from check import correct_combination
+"""
+Author: DG
+Version: 2.0
+Date: August 2025
+Purpose: Entry point and orchestrator for the number guessing game.
+         Coordinates all game components including level selection,
+         number generation, gameplay, and leaderboard management.
+"""
 
-def start_game():
-    random_generated_number = generate_random_integers()
-    no_of_guess_reamining =10
+from random_number_generator import RandomNumberGenerator
+from level_manager import LevelManager
+from score_manager import ScoreManager
+from game import Game
 
-    for i in range(10):
-        no_of_guess_reamining -= 1
-        guess = input("Guess the combination (Hint: each digit between 0 to 7):")
-        user_input_list= [int(digit) for digit in guess]
+class Main:
+    def __init__(self):
+        self.level_manager = LevelManager()
+        self.generator = None
+        self.target_combination  = None
+        self.score_manager = ScoreManager()
 
-        if (correct_combination(user_input_list,random_generated_number )) == True:
-            break
-        else:
-            print (f"You have {no_of_guess_reamining} guesses remaining")
-    
-    print (f"The correct combination is {random_generated_number}")
-    
+    def start_game(self):
+        #set values of num, min, max based on the level user chooses
+        length, min_val, max_val = self.level_manager.get_settings()
 
-start_game()
+        #generate the random numbers
+        self.generator = RandomNumberGenerator(length,min_val,max_val)
+        self.target_combination  = self.generator.generate_random_integers()
+
+        #start game
+        game = Game(length, min_val, max_val, self.target_combination)
+        final_score = game.game_plan()    
+
+        # Leaderboard update
+        username = input("\nEnter your username for the leaderboard: ")
+        player_rank, total_players = self.score_manager.add_score(username, final_score)
+        self.score_manager.display_leaderboard()
+
+        if player_rank > 10:
+            print(f"\nYou are ranked #{player_rank} out of {total_players} players.")
+           
+
+if __name__ == "__main__":
+    start = Main()
+    start.start_game()
