@@ -1,23 +1,29 @@
+"""
+Author: DG
+Version: 2.0
+Date: August 2025
+Purpose: External random number generation using random.org API.
+         Fetches truly random numbers for target combinations with
+         fallback to internal generation on API failure.
+"""
+
 from internal_generator import InternalGenerator
 import requests
 import datetime
-# import json
-#Import os to secure our APIKEY as env variable
-# import os 
 
 class RandomNumberGenerator:
-    def __init__(self, num, min, max):
+    def __init__(self, length, min_val, max_val):
         self.url = "https://www.random.org/integers/"
-        self.num = num
-        self.min = min
-        self.max = max
-        self.internal_num = InternalGenerator(self.num, self.min, self.max)
+        self.length = length
+        self.min_val = min_val
+        self.max_val = max_val
+        self.internal_num = InternalGenerator(self.length, self.min_val, self.max_val)
 
     def generate_random_integers(self):
         params = {
-            "num": self.num,        # Number of integers requested
-            "min": self.min,        # The smallest value returned
-            "max": self.max,        # The largest value returned
+            "num": self.length,        # Number of integers requested
+            "min": self.min_val,        # The smallest value returned
+            "max": self.max_val,        # The largest value returned
             "col": 1,        # Number of columns used to display the returned values
             "base": 10,      # Use base 10 system
             "format": "plain",  # Returns response in a plain text
@@ -35,15 +41,13 @@ class RandomNumberGenerator:
                     num = num.strip()
                     if num.isdigit():
                         random_data.append(int(num))
-                    else:
-                        with open("error.log", "a") as f: #append error into error.log
-                            f.write(f"\n Invalid value in server response: {num}")
                 if random_data:
+                    # print(random_data)
                     return random_data
                 else:
-                        with open("error.log", "a") as f:
-                            f.write(f"\n No valid numbers found in server response.")
-                        return None
+                    with open("error.log", "a") as f:
+                        f.write(f"\n Date and Time: {datetime.datetime.now()} \n No valid numbers found in server response.")
+                    return (self.internal_num.internal_number())
                 
             else:
                 with open("error.log", "a") as f:
@@ -54,4 +58,4 @@ class RandomNumberGenerator:
                 
         except requests.exceptions.RequestException as e:
             print(f"Error calling random.org API: {e}")
-            return None # Return None to indicate an error
+            return (self.internal_num.internal_number())

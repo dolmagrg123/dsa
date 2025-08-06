@@ -151,3 +151,7 @@ my_list = [1, 2, 2, 3, 1, 4, 2]
 frequency_map = Counter(my_list)
 print(frequency_map)
 # Output: Counter({2: 3, 1: 2, 3: 1, 4: 1})
+
+
+
+
