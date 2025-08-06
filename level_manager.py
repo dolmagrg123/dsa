@@ -1,8 +1,16 @@
+"""
+Author: DG
+Version: 2.0
+Date: August 2025
+Purpose: Manages difficulty levels and game configuration settings.
+         User can choose between easy, medium, and difficult modes which decides
+         combination length and digit ranges.
+"""
 class LevelManager:
     def __init__(self):
-        self.num = 4 
-        self.min = 0
-        self.max = 7
+        self.length = 4 
+        self.min_val = 0
+        self.max_val = 7
         self.level_settings = {
             "easy": (4, 0, 7),
             "medium": (8, 0, 7)
@@ -13,11 +21,11 @@ class LevelManager:
         while True:
             level = input("Choose a level (easy, medium, difficult): ").lower()
             if level in self.level_settings:
-                self.num, self.min, self.max = self.level_settings[level]
+                self.length, self.min_val, self.max_val = self.level_settings[level]
                 break
             elif level == "difficult":
-                self.min = 0
-                self.max = 9
+                self.min_val = 0
+                self.max_val = 9
                 self.get_difficult_level_settings()
                 break
             else:
@@ -28,7 +36,7 @@ class LevelManager:
             try:
                 length = int(input("Enter desired combination length (greater than 8): "))
                 if length > 8:
-                    self.num = length
+                    self.length = length
                     break
                 else:
                     print("Length must be greater than 8.")
@@ -38,4 +46,4 @@ class LevelManager:
     #calls choose_level function to get values of num, min and max and returns the values
     def get_settings(self):
         self.choose_level()
-        return self.num, self.min, self.max
+        return self.length, self.min_val, self.max_val

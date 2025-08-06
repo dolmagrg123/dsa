@@ -1,43 +1,45 @@
-from random_number_generator import RandomNumberGenerator
-from check import Checker
-from input_validation import InputValidation
-from level_manager import LevelManager
+"""
+Author: DG
+Version: 2.0
+Date: August 2025
+Purpose: Entry point and orchestrator for the number guessing game.
+         Coordinates all game components including level selection,
+         number generation, gameplay, and leaderboard management.
+"""
 
-class Game:
+from random_number_generator import RandomNumberGenerator
+from level_manager import LevelManager
+from score_manager import ScoreManager
+from game import Game
+
+class Main:
     def __init__(self):
         self.level_manager = LevelManager()
         self.generator = None
-        self.user_input = None
-        self.remaining_guesses = 10
         self.target_combination  = None
+        self.score_manager = ScoreManager()
 
     def start_game(self):
         #set values of num, min, max based on the level user chooses
-        num, min, max = self.level_manager.get_settings()
+        length, min_val, max_val = self.level_manager.get_settings()
 
-        self.generator = RandomNumberGenerator(num,min,max)
-        self.target_combination  = self.generator.generate_random_integers() # random number generated
-        self.user_input = InputValidation(num,min,max) # combination guessed by user
-    
-        while self.remaining_guesses > 0:
-            self.remaining_guesses -= 1
-            user_guess = self.user_input.input_validator()
+        #generate the random numbers
+        self.generator = RandomNumberGenerator(length,min_val,max_val)
+        self.target_combination  = self.generator.generate_random_integers()
 
-            #pass the two list of random generated numbers and combination guessed by user
-            checker = Checker(user_guess,self.target_combination)
+        #start game
+        game = Game(length, min_val, max_val, self.target_combination)
+        final_score = game.game_plan()    
 
-            is_correct, message = checker.correct_combination()
-            print(message)  # Show feedback from GuessChecker
+        # Leaderboard update
+        username = input("\nEnter your username for the leaderboard: ")
+        player_rank, total_players = self.score_manager.add_score(username, final_score)
+        self.score_manager.display_leaderboard()
 
-            if is_correct:
-                break
-            elif self.remaining_guesses > 0:
-                print(f"You have {self.remaining_guesses} guesses remaining")
-            else:
-                print(f"The correct combination is {self.target_combination}")
-                print("Sorry!!! You ran out of guesses. Please TRY AGAIN")
+        if player_rank > 10:
+            print(f"\nYou are ranked #{player_rank} out of {total_players} players.")
            
 
 if __name__ == "__main__":
-    game = Game()
-    game.start_game()
+    start = Main()
+    start.start_game()
