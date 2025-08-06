@@ -1,3 +1,11 @@
+"""
+Author: DG
+Version: 2.0
+Date: August 2025
+Purpose: Main game logic controller for the number guessing game.
+         Manages game flow, takes user input, calculates score, and 
+         coordinates feedback components.
+"""
 from check import Checker
 from input_validation import InputValidation
 

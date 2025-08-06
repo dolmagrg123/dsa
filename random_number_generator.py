@@ -1,3 +1,12 @@
+"""
+Author: DG
+Version: 2.0
+Date: August 2025
+Purpose: External random number generation using random.org API.
+         Fetches truly random numbers for target combinations with
+         fallback to internal generation on API failure.
+"""
+
 from internal_generator import InternalGenerator
 import requests
 import datetime

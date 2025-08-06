@@ -1,3 +1,11 @@
+"""
+Author: DG
+Version: 2.0
+Date: August 2025
+Purpose: Fallback random number generator for the number guessing game.
+         Generates random target combinations locally when external API
+         is unavailable or fails.
+"""
 import random
 
 class InternalGenerator:

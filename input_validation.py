@@ -1,3 +1,12 @@
+"""
+Author: DG
+Version: 2.0
+Date: August 2025
+Purpose: Handles user input validation for the number guessing game.
+         Ensures user guesses meet length, digit, and range requirements
+         before passing to game logic.
+"""
+
 class InputValidation:
 
     def __init__(self, length, min_val, max_val):

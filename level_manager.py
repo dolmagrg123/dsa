@@ -1,3 +1,11 @@
+"""
+Author: DG
+Version: 2.0
+Date: August 2025
+Purpose: Manages difficulty levels and game configuration settings.
+         User can choose between easy, medium, and difficult modes which decides
+         combination length and digit ranges.
+"""
 class LevelManager:
     def __init__(self):
         self.length = 4 

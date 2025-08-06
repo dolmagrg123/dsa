@@ -1,3 +1,12 @@
+"""
+Author: DG
+Version: 2.0
+Date: August 2025
+Purpose: Manages player scores and leaderboard functionality.
+         Handles score persistence to JSON file, ranking system,
+         and leaderboard display for the number guessing game.
+"""
+
 import json
 import os
 

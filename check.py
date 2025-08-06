@@ -1,3 +1,12 @@
+"""
+Author: DG
+Version: 2.0
+Date: August 2025
+Purpose: Provides feedback mechanism for the number guessing game.
+         Compares user guesses against target combination and returns
+         counts of correct numbers and correct positions.
+"""
+
 from collections import Counter
 
 class Checker:
