@@ -12,20 +12,20 @@ class Main:
 
     def start_game(self):
         #set values of num, min, max based on the level user chooses
-        num, min_val, max_val = self.level_manager.get_settings()
+        length, min_val, max_val = self.level_manager.get_settings()
 
         #generate the random numbers
-        self.generator = RandomNumberGenerator(num,min_val,max_val)
+        self.generator = RandomNumberGenerator(length,min_val,max_val)
         self.target_combination  = self.generator.generate_random_integers()
 
         #start game
-        game = Game(num, min_val, max_val, self.target_combination)
+        game = Game(length, min_val, max_val, self.target_combination)
         final_score = game.game_plan()    
 
         # Leaderboard update
         username = input("\nEnter your username for the leaderboard: ")
         player_rank, total_players = self.score_manager.add_score(username, final_score)
-        self.score_manager.display_leaderboard(highlight_user=username)
+        self.score_manager.display_leaderboard()
 
         if player_rank > 10:
             print(f"\nYou are ranked #{player_rank} out of {total_players} players.")

@@ -2,14 +2,14 @@ from check import Checker
 from input_validation import InputValidation
 
 class Game:
-    def __init__(self, num, min_val, max_val, target_combination):
+    def __init__(self, length, min_val, max_val, target_combination):
         self.remaining_guesses = 10
-        self.num = num
+        self.length = length
         self.min_val = min_val
         self.max_val = max_val
         self.target_combination = target_combination
         self.score = 0
-        self.user_input = InputValidation(num, min_val, max_val)
+        self.user_input = InputValidation(length, min_val, max_val)
         
     def game_plan(self):
         while self.remaining_guesses > 0:
@@ -34,7 +34,7 @@ class Game:
                 print("Sorry!!! You ran out of guesses. Please TRY AGAIN")
 
         # End-game bonus
-        self.score += self.remaining_guesses * 10 * self.num
+        self.score += self.remaining_guesses * 10 * self.length
         print(f"\nFinal score: {self.score}")
 
         return self.score
