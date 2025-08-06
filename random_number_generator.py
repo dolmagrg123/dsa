@@ -17,7 +17,7 @@ class RandomNumberGenerator:
         self.length = length
         self.min_val = min_val
         self.max_val = max_val
-        self.internal_num = InternalGenerator(self.length, self.min_val, self.max_val)
+        self.internal_generator = InternalGenerator(self.length, self.min_val, self.max_val)
 
     def generate_random_integers(self):
         params = {
@@ -36,26 +36,26 @@ class RandomNumberGenerator:
                 # cleanup the response and split with new line
                 numbers = response.text.strip().split('\n') 
 
-                random_data = []
+                generated_numbers = []
                 for num in numbers:
                     num = num.strip()
                     if num.isdigit():
-                        random_data.append(int(num))
-                if random_data:
+                        generated_numbers.append(int(num))
+                if generated_numbers:
                     # print(random_data)
-                    return random_data
+                    return generated_numbers
                 else:
                     with open("error.log", "a") as f:
                         f.write(f"\n Date and Time: {datetime.datetime.now()} \n No valid numbers found in server response.")
-                    return (self.internal_num.internal_number())
+                    return (self.internal_generator.internal_number())
                 
             else:
                 with open("error.log", "a") as f:
                     f.write(f"\n API_URL ERROR: Date and Time: {datetime.datetime.now()} \n Error Code: {response.status_code}")
 
                 #return list of random generated number without using API
-                return (self.internal_num.internal_number())
+                return (self.internal_generator.internal_number())
                 
         except requests.exceptions.RequestException as e:
             print(f"Error calling random.org API: {e}")
-            return (self.internal_num.internal_number())
+            return (self.internal_generator.internal_number())
