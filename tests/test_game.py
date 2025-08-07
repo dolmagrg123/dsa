@@ -25,6 +25,26 @@ class TestGameInitialization(unittest.TestCase):
         self.assertEqual(game.player_score, 0)
         self.assertEqual(game.hinted_positions, set())
 
+class TestGameHintBehavior(unittest.TestCase):
+
+    @patch('builtins.input', side_effect=(x for x in ['y', 'n'] + ['n'] * 10)) # takes only one hint, n to all other times
+    def test_hint_reduces_score_and_skips_guess(self, mock_input):
+        length = 4
+        min_val = 1
+        max_val = 6
+        target = [1, 2, 3, 4]
+
+        game = Game(length, min_val, max_val, target)
+
+        game.input_validator.input_validator = MagicMock(return_value=[0,0,0,0])
+        game.guesses_left = 2
+
+        final_score = game.game_plan()
+
+        self.assertEqual(final_score, 0)
+        self.assertEqual(len(game.hinted_positions), 1)
+        self.assertTrue(all(pos in range(length) for pos in game.hinted_positions))
+
 class TestGameWinCondition(unittest.TestCase):
     @patch('builtins.input', side_effect=(x for x in ['n']))  # No hint, just guess
     @patch('builtins.print')  # Mock print to suppress output or check messages if needed
