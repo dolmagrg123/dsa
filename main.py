@@ -61,8 +61,7 @@ class Main:
         player_rank, total_players = self.score_manager.add_score(username, final_score)
         self.score_manager.display_leaderboard()
 
-        if player_rank > 10:
-            print(f"\nYou are ranked #{player_rank} out of {total_players} players.")
+        print(f"\nYou are ranked #{player_rank} out of {total_players} players.")
            
 
 if __name__ == "__main__":

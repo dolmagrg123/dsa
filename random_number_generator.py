@@ -10,7 +10,7 @@ Purpose: External random number generation using random.org API.
 from internal_generator import InternalGenerator
 import requests
 import datetime
-from typing import List, Dict, Union, Any
+from typing import List
 
 class RandomNumberGenerator:
     """

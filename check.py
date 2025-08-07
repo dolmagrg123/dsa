@@ -77,7 +77,7 @@ class Checker:
             
             #Return feedback message and counts of correct numbers
             if total_correct_digits == 0 and correct_location_count == 0:
-                return 0, 0, "All digits input are incorrect"
+                return 0, 0, "All digits are incorrect"
             else:
                 return total_correct_digits, correct_location_count, f"{total_correct_digits} correct number and {correct_location_count} correct location"
         except ValueError as e:
