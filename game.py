@@ -59,6 +59,7 @@ class Game:
             print(f"Your Current score: {self.player_score}")
 
             if checker.correct_combination():
+                print("/n---------------YAYYYYY-----------------")
                 print("Congratulations!!! You have guessed the correct combination")
                 break  
 
