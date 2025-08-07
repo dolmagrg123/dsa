@@ -359,7 +359,28 @@ deactivate
   # Method 3: Close all Python processes and try again
   # Close any Python IDEs/terminals, then retry
   ```
+#### Web Interface Won't Start
+- **Error**: "ImportError: No module named 'flask'"
+- **Solution**: 
+  ```bash
+  # Make sure Flask is installed
+  pip install Flask
+  
+  # Or install all requirements
+  pip install -r requirements.txt
+  ```
 
+#### Port Already in Use (Web Interface)
+- **Error**: "Address already in use"
+- **Solution**: 
+  ```bash
+  # Kill existing Flask processes (macOS/Linux)
+  pkill -f flask
+  
+  # Or use a different port
+  # Edit app.py and change: app.run(port=5001)
+  ```
+  
 #### PowerShell Execution Policy Error (Windows)
 - **Error**: "running scripts is disabled on this system"
 - **Quick Fix**: Use Command Prompt instead of PowerShell
@@ -388,11 +409,16 @@ After installation, verify everything works:
 python --version  # Windows
 python3 --version  # macOS/Linux
 
-# Check if requests library is installed
+# Check if required libraries are installed
 python -c "import requests; print('Requests library installed successfully')"
+python -c "import flask; print('Flask library installed successfully')"
 
-# Test the game
+# Test the command-line game
 python main.py
+
+# Test the web interface
+python app.py
+# Then open http://localhost:5000 in your browse
 ```
 
 [Back to top](#table-of-contents)
