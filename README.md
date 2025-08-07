@@ -509,7 +509,7 @@ Enhancement Planning
 ![Plan_2](Images/plan_2.png)
 
 Final 
-![Final](Images/final.png)
+![Final](Images/Final.png)
 
 
 [Back to top](#table-of-contents)
