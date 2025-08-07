@@ -7,17 +7,18 @@ A number guessing game built in Python that challenges players to guess a random
 - [OBJECTIVES](#objectives)
 - [INSTALLATION](#installation)
 - [HOW TO PLAY](#how-to-play)
+  - [Command-Line Interface](#command-line-interface)
+  - [Web Interface (Recommended)](#web-interface-recommended)
 - [GAME MODES](#game-modes)
 - [SCORING SYSTEM](#scoring-system)
 - [THE STEPS TAKEN](#the-steps-taken-and-why-each-was-necessaryimportant)
-- [SYSTEM DESIGN DIAGRAM](#system-design-diagram)
+- [BACKEND-SYSTEM DESIGN DIAGRAM](#backend-system-design-diagram)
 - [OPTIMIZATION](#optimization)
 - [ISSUES & TROUBLESHOOTING](#issues-and-troubleshooting)
 - [API INTEGRATION](#api-integration)
 - [MONITORING & LOGGING](#monitoring--logging)
 - [VERSION HISTORY](#version-history)
 - [FUTURE ENHANCEMENTS](#Future-Enhancements)
-- [CONCLUSION](#conclusion)
 
 ---
 
@@ -197,8 +198,8 @@ sudo dnf install git
 ### Step 3: Clone the Repository
 
 ```bash
-https://github.com/dolmagrg123/dsa.git
-cd dsa
+https://github.com/dolmagrg123/mastermind-challenge
+cd mastermind
 ```
 
 ### Step 4: Create Virtual Environment (Recommended)
@@ -278,6 +279,7 @@ pip install -r requirements.txt
 **If requirements.txt doesn't exist, manually install:**
 ```bash
 pip install requests
+pip install Flask
 ```
 ### Step 6: Set API Key (Optional)
 
@@ -357,7 +359,28 @@ deactivate
   # Method 3: Close all Python processes and try again
   # Close any Python IDEs/terminals, then retry
   ```
+#### Web Interface Won't Start
+- **Error**: "ImportError: No module named 'flask'"
+- **Solution**: 
+  ```bash
+  # Make sure Flask is installed
+  pip install Flask
+  
+  # Or install all requirements
+  pip install -r requirements.txt
+  ```
 
+#### Port Already in Use (Web Interface)
+- **Error**: "Address already in use"
+- **Solution**: 
+  ```bash
+  # Kill existing Flask processes (macOS/Linux)
+  pkill -f flask
+  
+  # Or use a different port
+  # Edit app.py and change: app.run(port=5001)
+  ```
+  
 #### PowerShell Execution Policy Error (Windows)
 - **Error**: "running scripts is disabled on this system"
 - **Quick Fix**: Use Command Prompt instead of PowerShell
@@ -386,11 +409,16 @@ After installation, verify everything works:
 python --version  # Windows
 python3 --version  # macOS/Linux
 
-# Check if requests library is installed
+# Check if required libraries are installed
 python -c "import requests; print('Requests library installed successfully')"
+python -c "import flask; print('Flask library installed successfully')"
 
-# Test the game
+# Test the command-line game
 python main.py
+
+# Test the web interface
+python app.py
+# Then open http://localhost:5000 in your browse
 ```
 
 [Back to top](#table-of-contents)
@@ -400,10 +428,23 @@ python main.py
 ## HOW TO PLAY
 
 ### Getting Started
-1. **Run the game:** Execute `python main.py` in your terminal(Look into Installation section if it did not work)
+
+You have two ways to enjoy the Mastermind Game:
+
+### Command-Line Interface
+
+1. **Run the game:** Execute `python main.py` in your terminal
 2. **Choose game mode:** Select Single Player (vs Computer) or Multiplayer (Player vs Player)
 3. **Select difficulty:** Choose Easy (4 digits), Medium (8 digits), or Difficult (custom length)
 4. **Start guessing:** You have 10 attempts and 5 minutes to crack the code!
+
+### Web Interface (Recommended)
+
+1. **Start the server:** Execute `python app.py` in your terminal
+2. **Open your browser:** Navigate to `http://localhost:5000`
+3. **Configure game:** Use the intuitive interface to select mode and difficulty
+4. **Play interactively:** Click buttons, see real-time updates, and track your progress visually
+
 
 ### During Gameplay
 - **Enter your guess:** Type the combination when prompted
@@ -704,23 +745,13 @@ Fallback: Internal generation used
 ---
 ## Future Enhancements
 
-Web-based Interface: HTML/CSS/JavaScript frontend
-Online Multiplayer: Real-time competition with remote players
-Advanced Statistics: Detailed performance analytics and trends
-Mobile Application: iOS/Android native apps
-Database Integration: Cloud-based user profiles and global leaderboards
-Tournament Mode: Bracket-style competitions with multiple players
-AI Opponents: Machine learning-based computer players with adaptive difficulty
+- Online Multiplayer: Real-time competition with remote players
+- Advanced Statistics: Detailed performance analytics and trends
+- Mobile Application: iOS/Android native apps
+- Database Integration: Cloud-based user profiles and global leaderboards
+- Tournament Mode: Bracket-style competitions with multiple players
+- AI Opponents: Machine learning-based computer players with adaptive difficulty
 
----
-## CONCLUSION
-
-The Mastermind Game  is designed to provide an engaging, scalable gaming experience that demonstrates advanced programming concepts including:
-- Object-oriented design principles
-- External API integration with fallback mechanisms
-- Persistent data storage and leaderboard management
-- Input validation and error handling
-- Modular architecture for maintainability
 
 ## Contributing
 Feel free to fork this repository and submit pull requests for improvements or bug fixes.
@@ -732,5 +763,4 @@ Feel free to fork this repository and submit pull requests for improvements or b
 - Version 3.0 - Timer, Hints & Multiplayer Features - August 2025
 
 [Back to top](#table-of-contents)
-
 
