@@ -16,7 +16,7 @@ A number guessing game built in Python that challenges players to guess a random
 - [API INTEGRATION](#api-integration)
 - [MONITORING & LOGGING](#monitoring--logging)
 - [VERSION HISTORY](#version-history)
-- [CFUTURE ENHANCEMENTS](#Future-Enhancements)
+- [FUTURE ENHANCEMENTS](#Future-Enhancements)
 - [CONCLUSION](#conclusion)
 
 ---
