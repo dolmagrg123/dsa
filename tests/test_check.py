@@ -49,6 +49,27 @@ class TestChecker(unittest.TestCase):
         self.assertEqual(correct_location, 0)
         self.assertIn("4 correct number and 0 correct location", message)
 
+    def test_mixed_correct_and_wrong_positions(self):
+        target = [1, 2, 3, 4]
+        guess = [1, 4, 2, 5]
+        checker = Checker(user_guess_digits=guess, target_digits=target)
+        total_correct, correct_location, message = checker.feedback_provider()
+
+        self.assertEqual(total_correct, 3)
+        self.assertEqual(correct_location, 1)
+        self.assertIn("3 correct number and 1 correct location", message)
+
+    def test_correct_combination_true(self):
+        target = [1, 2, 3, 4]
+        guess = [1, 2, 3, 4]
+        checker = Checker(user_guess_digits=guess, target_digits=target)
+        self.assertTrue(checker.correct_combination())
+
+    def test_correct_combination_false(self):
+        target = [1, 2, 3, 4]
+        guess = [4, 3, 2, 1]
+        checker = Checker(user_guess_digits=guess, target_digits=target)
+        self.assertFalse(checker.correct_combination())
 
 if __name__ == "__main__":
     unittest.main()
