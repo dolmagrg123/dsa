@@ -8,9 +8,10 @@ Purpose: Main game logic controller for the number guessing game.
 """
 from check import Checker
 from input_validation import InputValidation
+from typing import List
 
 class Game:
-    def __init__(self, length, min_val, max_val, target_combination):
+    def __init__(self, length: int, min_val: int, max_val: int, target_combination: List[int]) -> None:
         self.guesses_left = 10
         self.length = length
         self.min_val = min_val
@@ -19,7 +20,10 @@ class Game:
         self.player_score = 0
         self.input_validator  = InputValidation(length, min_val, max_val)
         
-    def game_plan(self):
+    def game_plan(self)-> int:
+        """
+        Main game loop that handles calling all necessary classes to run the game"
+        """
         while self.guesses_left > 0:
             self.guesses_left -= 1
             user_guess = self.input_validator .input_validator()
