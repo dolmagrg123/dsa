@@ -9,7 +9,7 @@ Purpose: Main game logic controller for the number guessing game.
 from check import Checker
 from input_validation import InputValidation
 from typing import List
-
+import time
 class Game:
     """
     Main game controller that orchestrates the gameplay loop.
@@ -37,16 +37,48 @@ class Game:
         self.max_val = max_val
         self.target_combination = target_combination
         self.player_score = 0
+        self.hinted_positions = set() # To keep track of hinted positions
         self.input_validator  = InputValidation(length, min_val, max_val)
         
     def game_plan(self)-> int:
         """
         Main game loop that handles calling all necessary classes to run the game"
+        Allows players to take hints.
 
         Returns:
             int: Final player score
         """
+        start_time = time.time()
+        time_limit = 300 #seconds
+
         while self.guesses_left > 0:
+            elapsed_time = time.time() - start_time
+            if elapsed_time > time_limit:
+                print("\nTime's up! You ran out of time.")
+                self.guesses_left = 0 # End the game loop
+                break
+
+            while True:
+                time_remaining = max(0, time_limit - int(elapsed_time))
+                hint_choice = input(f"Time remaining: {time_remaining} seconds. Do you want a hint? (y/n): ").lower()
+                if hint_choice in ['y', 'n']:
+                    break
+                else:
+                    print("Invalid input. Please enter 'y' or 'n'.")
+
+            if hint_choice == 'y':
+                hint_provided = False
+                for i in range(self.length):
+                    # Check if the position hasn't been hinted
+                    if i not in self.hinted_positions: 
+                        print(f"Hint: The number at position {i+1} is {self.target_combination[i]}.")
+                        self.player_score = max(0, self.player_score - 10) # Deduct points, ensure score doesn't go below 0
+                        self.hinted_positions.add(i)
+                        hint_provided = True
+                        break # Provide only one hint per request
+                if not hint_provided:
+                    print("No new hints available at this time.")
+                continue # Skip the guessing process for this turn if a hint was requested
             self.guesses_left -= 1
             user_guess = self.input_validator .input_validator()
 
@@ -62,7 +94,6 @@ class Game:
                 print("\n---------------YAYYYYY-----------------")
                 print("Congratulations!!! You have guessed the correct combination")
                 break  
-
             if self.guesses_left > 0:
                 print(f"You have {self.guesses_left} guesses remaining")
             else:
