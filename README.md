@@ -502,14 +502,15 @@ Final Score: 3 - 10 + 4 + 280 = 277 points
 
 ## SYSTEM DESIGN DIAGRAM
 
+Final System
+![Final](Images/Final.png)
+
+Version 2
+![Plan_2](Images/plan_2.png)
+
 Initial Base Game
 ![Plan_1](Images/plan_1.png)
 
-Enhancement Planning
-![Plan_2](Images/plan_2.png)
-
-Final 
-![Final](Images/Final.png)
 
 
 [Back to top](#table-of-contents)

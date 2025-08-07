@@ -94,7 +94,7 @@ class Main:
 
 if __name__ == "__main__":
     start = Main()
-    start.start_game()
+    
     while True:
         start.start_game()
         play_again = input("\nDo you want to play again? (y/n): ").lower()
