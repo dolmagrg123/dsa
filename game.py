@@ -11,7 +11,26 @@ from input_validation import InputValidation
 from typing import List
 
 class Game:
+    """
+    Main game controller that orchestrates the gameplay loop.
+    
+    Manages the core game logic including user input, feedback,
+    scoring, and win/lose conditions.
+    """
+
     def __init__(self, length: int, min_val: int, max_val: int, target_combination: List[int]) -> None:
+        """
+        Initialize the game with specified parameters.
+        
+        Args:
+            length (int): Length of the target combination
+            min_val (int): Minimum allowed digit value
+            max_val (int): Maximum allowed digit value
+            target_combination (List[int]): The target combination to guess
+            
+        Returns:
+            None
+        """
         self.guesses_left = 10
         self.length = length
         self.min_val = min_val
@@ -23,6 +42,9 @@ class Game:
     def game_plan(self)-> int:
         """
         Main game loop that handles calling all necessary classes to run the game"
+
+        Returns:
+            int: Final player score
         """
         while self.guesses_left > 0:
             self.guesses_left -= 1
@@ -31,6 +53,7 @@ class Game:
             #pass the two list of random generated numbers and combination guessed by user
             checker = Checker(user_guess,self.target_combination)
             correct_number, correct_location, feedback = checker.feedback_provider()
+            
             self.player_score += correct_number + correct_location
             print(feedback)
             print(f"Your Current score: {self.player_score}")

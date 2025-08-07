@@ -13,13 +13,38 @@ from score_manager import ScoreManager
 from game import Game
 
 class Main:
-    def __init__(self):
+    """
+    Main application controller and entry point.
+    
+    Coordinates all game components and manages the overall
+    application flow from start to finish.
+    """
+
+    def __init__(self) -> None:
+        """
+        Initialize the main application controller.
+        
+        Sets up all necessary classes and initializes
+        instance variables.
+        
+        Returns:
+            None
+        """
         self.level_manager = LevelManager()
         self.generator = None
         self.target_combination  = None
         self.score_manager = ScoreManager()
 
-    def start_game(self):
+    def start_game(self) -> None:
+        """
+        Start and orchestrate the complete game session.
+        
+        Handles level selection, random number generation,
+        gameplay execution, and leaderboard management.
+        
+        Returns:
+            None
+        """
         #set values of num, min, max based on the level user chooses
         length, min_val, max_val = self.level_manager.get_settings()
 
