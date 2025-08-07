@@ -6,9 +6,8 @@ Purpose: Entry point and orchestrator for the number guessing game.
          Coordinates all game components including level selection,
          number generation, gameplay, multiplayer-selection, and leaderboard management.
 """
-
-from random_number_generator import RandomNumberGenerator
 from level_manager import LevelManager
+from random_number_generator import RandomNumberGenerator
 from score_manager import ScoreManager
 from game import Game
 import getpass

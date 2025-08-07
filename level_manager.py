@@ -57,7 +57,7 @@ class LevelManager:
             else:
                 print("Invalid level.")
 
-    def get_difficult_level_settings(self):
+    def get_difficult_level_settings(self) -> None:
         """
         Handle custom settings for difficult level.
         
