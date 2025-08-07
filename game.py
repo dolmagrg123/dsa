@@ -9,7 +9,7 @@ Purpose: Main game logic controller for the number guessing game.
 from check import Checker
 from input_validation import InputValidation
 from typing import List
-
+import time
 class Game:
     """
     Main game controller that orchestrates the gameplay loop.
@@ -48,9 +48,19 @@ class Game:
         Returns:
             int: Final player score
         """
+        start_time = time.time()
+        time_limit = 300 #seconds
+
         while self.guesses_left > 0:
+            elapsed_time = time.time() - start_time
+            if elapsed_time > time_limit:
+                print("\nTime's up! You ran out of time.")
+                self.guesses_left = 0 # End the game loop
+                break
+
             while True:
-                hint_choice = input("Do you want a hint? (y/n): ").lower()
+                time_remaining = max(0, time_limit - int(elapsed_time))
+                hint_choice = input(f"Time remaining: {time_remaining} seconds. Do you want a hint? (y/n): ").lower()
                 if hint_choice in ['y', 'n']:
                     break
                 else:
