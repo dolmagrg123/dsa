@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background: #fafafa;
+        }
+        .section h3 {
+            margin-top: 0;
+            color: #555;
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        input[type="text"], input[type="number"], input[type="password"] {
+            width: 300px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        button {
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .game-info {
+            background: #e9ecef;
+            padding: 10px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+        }
+        .game-info span {
+            display: inline-block;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        .feedback {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .feedback-item {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #007bff;
+            background: white;
+        }
+        .feedback-item.success {
+            border-left-color: green;
+        }
+        .feedback-item.hint {
+            border-left-color: purple;
+        }
+        .feedback-item.error {
+            border-left-color: red;
+        }
+        .game-over {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        .game-over.lost {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        .hidden {
+            display: none;
+        }
+        .leaderboard {
+            background: #e2e3e5;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+        }
+        .leaderboard ol {
+            margin: 10px 0;
+        }
+        .timer.warning {
+            color: orange;
+        }
+        .timer.danger {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Number Guessing Game</h1>
+
+        <!-- Setup Area -->
+        <div id="setup-area">
+            <div class="section">
+                <h3>Game Mode</h3>
+                <label><input type="radio" name="mode" value="single" checked> Single Player</label>
+                <label><input type="radio" name="mode" value="multi"> Multiplayer (Player vs Player)</label>
+            </div>
+
+            <div class="section">
+                <h3>Difficulty Level</h3>
+                <label><input type="radio" name="difficulty" value="easy" checked> Easy (4 digits, 0-7)</label>
+                <label><input type="radio" name="difficulty" value="medium"> Medium (8 digits, 0-7)</label>
+                <label><input type="radio" name="difficulty" value="difficult"> Difficult (Custom length, 0-9)</label>
+                
+                <div id="custom-length" class="hidden">
+                    <label>Combination Length: <input type="number" id="custom-length-input" min="9" max="20" placeholder="Enter length > 8"></label>
+                </div>
+            </div>
+
+            <!-- Multiplayer Setup -->
+            <div id="multiplayer-setup" class="section hidden">
+                <h3>Player 1: Set Secret Code</h3>
+                <p>Enter your secret combination (digits separated by spaces):</p>
+                <input type="password" id="secret-code" placeholder="e.g., 1 2 3 4">
+                <button id="validate-code">Validate Code</button>
+                <div id="code-feedback"></div>
+            </div>
+
+            <button id="start-game">Start New Game</button>
+        </div>
+
+        <!-- Game Area -->
+        <div id="game-area" class="hidden">
+            <div class="game-info">
+                <span>Time: <span id="timer" class="timer">5:00</span></span>
+                <span>Score: <span id="score">0</span></span>
+                <span>Guesses Left: <span id="guesses-left">10</span></span>
+                <span>Length: <span id="combination-length">4</span></span>
+            </div>
+
+            <div class="section">
+                <p id="instruction-text">Guess the 4-digit combination (digits 0-7)</p>
+                <input type="text" id="guess-input" placeholder="Enter your guess">
+                <button id="submit-guess">Submit Guess</button>
+                <button id="get-hint">Get Hint (-10 pts)</button>
+            </div>
+
+            <div class="feedback" id="feedback-area">
+                <div class="feedback-item">Game started! Good luck!</div>
+            </div>
+
+            <!-- Game Over -->
+            <div id="game-over" class="hidden">
+                <h3 id="game-result">Game Over!</h3>
+                <p id="final-score-text">Your final score: <span id="final-score">0</span></p>
+                <p id="target-reveal" class="hidden">The correct combination was: <span id="target-combination"></span></p>
+                
+                <div>
+                    <label>Enter your name for leaderboard: 
+                        <input type="text" id="username-input" placeholder="Your name">
+                    </label>
+                    <button id="submit-score">Submit Score</button>
+                </div>
+                
+                <div id="rank-display" class="hidden">
+                    <p>You ranked #<span id="player-rank">0</span> out of <span id="total-players">0</span> players!</p>
+                </div>
+            </div>
+
+            <!-- Leaderboard -->
+            <div id="leaderboard-section" class="leaderboard hidden">
+                <h3>Top 10 Leaderboard</h3>
+                <ol id="leaderboard-list"></ol>
+            </div>
+
+            <button id="play-again" class="hidden">Play Again</button>
+        </div>
+    </div>
+
+    <script>
+        let gameData = null;
+        let timerInterval = null;
+
+        // DOM Elements
+        const setupArea = document.getElementById('setup-area');
+        const gameArea = document.getElementById('game-area');
+        const customLengthDiv = document.getElementById('custom-length');
+        const multiplayerSetup = document.getElementById('multiplayer-setup');
+        const startGameBtn = document.getElementById('start-game');
+        const guessInput = document.getElementById('guess-input');
+        const submitGuessBtn = document.getElementById('submit-guess');
+        const getHintBtn = document.getElementById('get-hint');
+        const feedbackArea = document.getElementById('feedback-area');
+        const gameOverDiv = document.getElementById('game-over');
+        const playAgainBtn = document.getElementById('play-again');
+        const leaderboardSection = document.getElementById('leaderboard-section');
+
+        // Event Listeners
+        document.querySelectorAll('input[name="difficulty"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                customLengthDiv.classList.toggle('hidden', this.value !== 'difficult');
+            });
+        });
+
+        document.querySelectorAll('input[name="mode"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                multiplayerSetup.classList.toggle('hidden', this.value !== 'multi');
+            });
+        });
+
+        document.getElementById('validate-code').addEventListener('click', validateSecretCode);
+        startGameBtn.addEventListener('click', startGame);
+        submitGuessBtn.addEventListener('click', submitGuess);
+        getHintBtn.addEventListener('click', getHint);
+        document.getElementById('submit-score').addEventListener('click', submitScore);
+        playAgainBtn.addEventListener('click', resetGame);
+
+        // Enter key support
+        guessInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') submitGuess();
+        });
+
+        document.getElementById('secret-code').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') validateSecretCode();
+        });
+
+        function validateSecretCode() {
+            const secretCode = document.getElementById('secret-code').value.trim();
+            const difficulty = document.querySelector('input[name="difficulty"]:checked').value;
+            const feedback = document.getElementById('code-feedback');
+            
+            if (!secretCode) {
+                feedback.innerHTML = '<div class="feedback-item error">Please enter a code</div>';
+                return;
+            }
+
+            try {
+                const digits = secretCode.split(/\s+/).map(x => parseInt(x));
+                let length, minVal, maxVal;
+                
+                if (difficulty === 'easy') {
+                    length = 4; minVal = 0; maxVal = 7;
+                } else if (difficulty === 'medium') {
+                    length = 8; minVal = 0; maxVal = 7;
+                } else {
+                    const customLength = parseInt(document.getElementById('custom-length-input').value);
+                    if (!customLength || customLength <= 8) {
+                        feedback.innerHTML = '<div class="feedback-item error">Please set custom length > 8</div>';
+                        return;
+                    }
+                    length = customLength; minVal = 0; maxVal = 9;
+                }
+
+                if (digits.length !== length) {
+                    feedback.innerHTML = `<div class="feedback-item error">Must enter exactly ${length} digits</div>`;
+                    return;
+                }
+
+                if (digits.some(d => isNaN(d) || d < minVal || d > maxVal)) {
+                    feedback.innerHTML = `<div class="feedback-item error">All digits must be between ${minVal} and ${maxVal}</div>`;
+                    return;
+                }
+
+                feedback.innerHTML = '<div class="feedback-item success">Code validated! Ready to start.</div>';
+                gameData = { targetCombination: digits };
+                
+            } catch (e) {
+                feedback.innerHTML = '<div class="feedback-item error">Invalid format. Use spaces between digits.</div>';
+            }
+        }
+
+        async function startGame() {
+            const mode = document.querySelector('input[name="mode"]:checked').value;
+            const difficulty = document.querySelector('input[name="difficulty"]:checked').value;
+            
+            let customLength = null;
+            if (difficulty === 'difficult') {
+                customLength = parseInt(document.getElementById('custom-length-input').value);
+                if (!customLength || customLength <= 8) {
+                    alert('Please enter a valid length greater than 8 for difficult mode');
+                    return;
+                }
+            }
+
+            let targetCombination = null;
+            if (mode === 'multi') {
+                if (!gameData || !gameData.targetCombination) {
+                    alert('Please validate your secret code first');
+                    return;
+                }
+                targetCombination = gameData.targetCombination;
+            }
+
+            try {
+                const response = await fetch('/start_game', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        mode: mode,
+                        difficulty: difficulty,
+                        custom_length: customLength,
+                        target_combination: targetCombination
+                    })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    gameData = data.game_info;
+                    setupArea.classList.add('hidden');
+                    gameArea.classList.remove('hidden');
+                    updateGameInfo();
+                    updateInstructions();
+                    startTimer();
+                    guessInput.focus();
+                } else {
+                    alert('Error starting game: ' + data.error);
+                }
+            } catch (error) {
+                alert('Error starting game: ' + error.message);
+            }
+        }
+
+        function updateInstructions() {
+            const text = `Guess the ${gameData.length}-digit combination (digits ${gameData.min_val}-${gameData.max_val})`;
+            document.getElementById('instruction-text').textContent = text;
+            document.getElementById('combination-length').textContent = gameData.length;
+            guessInput.maxLength = gameData.length;
+        }
+
+        function updateGameInfo() {
+            document.getElementById('score').textContent = gameData.score || 0;
+            document.getElementById('guesses-left').textContent = gameData.guesses_left || 10;
+        }
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(async () => {
+                try {
+                    const response = await fetch('/game_status');
+                    const data = await response.json();
+                    
+                    if (data.error) {
+                        clearInterval(timerInterval);
+                        return;
+                    }
+
+                    const timeRemaining = data.time_remaining;
+                    const minutes = Math.floor(timeRemaining / 60);
+                    const seconds = Math.floor(timeRemaining % 60);
+                    const timerElement = document.getElementById('timer');
+                    
+                    timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    
+                    // Change timer color based on remaining time
+                    timerElement.className = 'timer';
+                    if (timeRemaining < 60) {
+                        timerElement.classList.add('danger');
+                    } else if (timeRemaining < 180) {
+                        timerElement.classList.add('warning');
+                    }
+
+                    // Update other game info
+                    document.getElementById('score').textContent = data.score;
+                    document.getElementById('guesses-left').textContent = data.guesses_left;
+
+                    // Check if game is over
+                    if (data.game_over) {
+                        clearInterval(timerInterval);
+                        endGame(data.won, data.target_combination);
+                    }
+
+                } catch (error) {
+                    console.error('Error updating game status:', error);
+                }
+            }, 1000);
+        }
+
+        async function submitGuess() {
+            const guess = guessInput.value.trim();
+            if (!guess) {
+                alert('Please enter a guess');
+                return;
+            }
+
+            try {
+                const response = await fetch('/make_guess', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ guess: guess })
+                });
+
+                const data = await response.json();
+                if (data.error) {
+                    addFeedback(data.error, 'error');
+                    return;
+                }
+
+                if (data.success) {
+                    const result = data.guess_result;
+                    addFeedback(`Guess: ${guess} → ${result.feedback}`, 'success');
+                    addFeedback(`Score: +${result.points_earned} points (Total: ${result.total_score})`);
+                    
+                    if (result.bonus) {
+                        addFeedback(`Bonus: +${result.bonus} points for remaining guesses!`, 'success');
+                    }
+
+                    guessInput.value = '';
+                    updateGameInfo();
+
+                    if (data.game_state.game_over) {
+                        clearInterval(timerInterval);
+                        endGame(data.game_state.won, null);
+                    }
+                }
+            } catch (error) {
+                addFeedback('Error submitting guess: ' + error.message, 'error');
+            }
+        }
+
+        async function getHint() {
+            try {
+                const response = await fetch('/get_hint', { method: 'POST' });
+                const data = await response.json();
+                
+                if (data.error) {
+                    addFeedback(data.error, 'error');
+                    return;
+                }
+
+                if (data.success) {
+                    addFeedback(`Hint: ${data.hint}`, 'hint');
+                    addFeedback(`Score: -${data.penalty} points (Total: ${data.score})`);
+                    document.getElementById('score').textContent = data.score;
+                }
+            } catch (error) {
+                addFeedback('Error getting hint: ' + error.message, 'error');
+            }
+        }
+
+        function addFeedback(message, type = '') {
+            const item = document.createElement('div');
+            item.className = 'feedback-item' + (type ? ' ' + type : '');
+            item.textContent = message;
+            feedbackArea.appendChild(item);
+            feedbackArea.scrollTop = feedbackArea.scrollHeight;
+        }
+
+        async function endGame(won, targetCombination) {
+            submitGuessBtn.disabled = true;
+            getHintBtn.disabled = true;
+            guessInput.disabled = true;
+
+            // Get final game status
+            const response = await fetch('/game_status');
+            const data = await response.json();
+            
+            document.getElementById('game-result').textContent = won ? 'Congratulations! You Won!' : 'Game Over!';
+            document.getElementById('final-score').textContent = data.score || 0;
+            
+            const gameOverDiv = document.getElementById('game-over');
+            gameOverDiv.className = won ? 'game-over' : 'game-over lost';
+            
+            if (!won && data.target_combination) {
+                document.getElementById('target-combination').textContent = data.target_combination.join(' ');
+                document.getElementById('target-reveal').classList.remove('hidden');
+            }
+            
+            gameOverDiv.classList.remove('hidden');
+            
+            if (won) {
+                addFeedback('🎉 CONGRATULATIONS! You cracked the code!', 'success');
+            } else {
+                addFeedback('😞 Better luck next time!', 'error');
+            }
+        }
+
+        async function submitScore() {
+            const username = document.getElementById('username-input').value.trim();
+            if (!username) {
+                alert('Please enter your name');
+                return;
+            }
+
+            try {
+                const response = await fetch('/submit_score', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: username })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('player-rank').textContent = data.rank;
+                    document.getElementById('total-players').textContent = data.total_players;
+                    document.getElementById('rank-display').classList.remove('hidden');
+                    document.getElementById('submit-score').disabled = true;
+                    
+                    // Show leaderboard
+                    showLeaderboard();
+                } else {
+                    alert('Error submitting score: ' + data.error);
+                }
+            } catch (error) {
+                alert('Error submitting score: ' + error.message);
+            }
+        }
+
+        async function showLeaderboard() {
+            try {
+                const response = await fetch('/leaderboard');
+                const data = await response.json();
+                
+                const list = document.getElementById('leaderboard-list');
+                list.innerHTML = '';
+                
+                data.leaderboard.forEach(entry => {
+                    const item = document.createElement('li');
+                    item.textContent = `${entry.username} - ${entry.score} points`;
+                    list.appendChild(item);
+                });
+                
+                leaderboardSection.classList.remove('hidden');
+                playAgainBtn.classList.remove('hidden');
+            } catch (error) {
+                console.error('Error loading leaderboard:', error);
+                playAgainBtn.classList.remove('hidden');
+            }
+        }
+
+        async function resetGame() {
+            try {
+                await fetch('/reset_game', { method: 'POST' });
+                
+                // Reset UI
+                setupArea.classList.remove('hidden');
+                gameArea.classList.add('hidden');
+                gameOverDiv.classList.add('hidden');
+                leaderboardSection.classList.add('hidden');
+                playAgainBtn.classList.add('hidden');
+                document.getElementById('rank-display').classList.add('hidden');
+                document.getElementById('target-reveal').classList.add('hidden');
+                
+                // Reset form
+                document.querySelector('input[name="mode"][value="single"]').checked = true;
+                document.querySelector('input[name="difficulty"][value="easy"]').checked = true;
+                customLengthDiv.classList.add('hidden');
+                multiplayerSetup.classList.add('hidden');
+                document.getElementById('custom-length-input').value = '';
+                document.getElementById('secret-code').value = '';
+                document.getElementById('code-feedback').innerHTML = '';
+                document.getElementById('username-input').value = '';
+                document.getElementById('submit-score').disabled = false;
+                
+                // Reset game controls
+                submitGuessBtn.disabled = false;
+                getHintBtn.disabled = false;
+                guessInput.disabled = false;
+                guessInput.value = '';
+                
+                // Clear feedback
+                feedbackArea.innerHTML = '<div class="feedback-item">Ready for a new game!</div>';
+                
+                // Clear timer
+                if (timerInterval) clearInterval(timerInterval);
+                document.getElementById('timer').textContent = '5:00';
+                document.getElementById('timer').className = 'timer';
+                
+                gameData = null;
+                
+            } catch (error) {
+                console.error('Error resetting game:', error);
+            }
+        }
+    </script>
+</body>
+</html>

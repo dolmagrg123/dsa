@@ -1,6 +1,6 @@
 # Mastermind Game: GUESS THE NUMBERS
 
-A number guessing game built in Python that challenges players to guess a randomly generated combination with intelligent feedback and scoring system. Also has a multiplayer mode where players can challenge each other.
+A number guessing game built in Python that challenges players to guess a randomly generated combination with intelligent feedback and scoring system. It also has a multiplayer mode where players can challenge each other.
 
 ## Table of Contents
 - [PURPOSE](#purpose)
@@ -175,6 +175,8 @@ pip3 --version
 3. Verify: `git --version` in Command Prompt
 
 #### macOS
+Download Git from [git-scm.com](https://git-scm.com/downloads/mac)
+
 ```bash
 # Using Homebrew
 brew install git
@@ -184,6 +186,8 @@ xcode-select --install
 ```
 
 #### Linux
+Download Git from [git-scm.com](https://git-scm.com/downloads/linux)
+
 ```bash
 # Ubuntu/Debian
 sudo apt install git
@@ -324,6 +328,10 @@ source ~/.bashrc
 # macOS/Linux: You should see (game_env) in prompt
 
 python main.py
+
+# Alternately for UI
+
+python app.py
 ```
 
 ### Step 8: Deactivate Virtual Environment (When Done)
