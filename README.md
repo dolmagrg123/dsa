@@ -175,6 +175,8 @@ pip3 --version
 3. Verify: `git --version` in Command Prompt
 
 #### macOS
+Download Git from [git-scm.com](https://git-scm.com/downloads/mac)
+
 ```bash
 # Using Homebrew
 brew install git
@@ -184,6 +186,8 @@ xcode-select --install
 ```
 
 #### Linux
+Download Git from [git-scm.com](https://git-scm.com/downloads/linux)
+
 ```bash
 # Ubuntu/Debian
 sudo apt install git
