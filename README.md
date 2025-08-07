@@ -1,6 +1,6 @@
 # Mastermind Game: GUESS THE NUMBERS
 
-A number guessing game built in Python that challenges players to guess a randomly generated combination with intelligent feedback and scoring system. Also has a multiplayer mode where players can challenge each other.
+A number guessing game built in Python that challenges players to guess a randomly generated combination with intelligent feedback and scoring system. It also has a multiplayer mode where players can challenge each other.
 
 ## Table of Contents
 - [PURPOSE](#purpose)
@@ -324,6 +324,10 @@ source ~/.bashrc
 # macOS/Linux: You should see (game_env) in prompt
 
 python main.py
+
+# Alternately for UI
+
+python app.py
 ```
 
 ### Step 8: Deactivate Virtual Environment (When Done)
