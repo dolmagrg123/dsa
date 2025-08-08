@@ -11,6 +11,8 @@ from internal_generator import InternalGenerator
 import requests
 import datetime
 from typing import List
+import os
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 class RandomNumberGenerator:
     """
@@ -77,12 +79,12 @@ class RandomNumberGenerator:
                 if generated_numbers:
                     return generated_numbers
                 else:
-                    with open("error.log", "a") as f:
+                    with open(os.path.join(PROJECT_ROOT, "backend", "error.log"), "a") as f:
                         f.write(f"\n Date and Time: {datetime.datetime.now()} \n No valid numbers found in server response.")
                     return (self.internal_generator.internal_number())
                 
             else:
-                with open("error.log", "a") as f:
+                with open(os.path.join(PROJECT_ROOT, "backend", "error.log"), "a") as f:
                     f.write(f"\n API_URL ERROR: Date and Time: {datetime.datetime.now()} \n Error Code: {response.status_code}")
 
                 #return list of random generated number without using API

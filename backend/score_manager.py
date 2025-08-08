@@ -11,7 +11,8 @@ import json
 import os
 from typing import List, Dict, Tuple, Union
 
-SCORE_FILE = "scores.json"
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SCORE_FILE = os.path.join(PROJECT_ROOT, "backend", "scores.json")
 
 class ScoreManager:
     """
