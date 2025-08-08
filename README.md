@@ -99,7 +99,7 @@ Player guesses "0 1 5 6" → "3 correct numbers and 2 correct location"
 ## INSTALLATION
 
 ### Prerequisites
-- Python 3.7 or higher
+- Python 3.7 or higher (Windows)
 - Git (for cloning the repository)
 - Internet connection (for external API, optional)
 
@@ -128,6 +128,10 @@ Player guesses "0 1 5 6" → "3 correct numbers and 2 correct location"
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
    # Add Homebrew to your PATH
+   echo >> <PATH>
+   echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> <PATH>
+   eval "$(/opt/homebrew/bin/brew shellenv)"
+
    
    # Install Python
    brew install python
