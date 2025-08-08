@@ -7,6 +7,10 @@ Date: August 2025
 Purpose: Web-based interface using Flask to replace command-line interaction
 """
 
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'backend'))
+
 from flask import Flask, render_template, request, jsonify, session
 import time
 import secrets
@@ -20,7 +24,7 @@ from game import Game
 from check import Checker
 # from input_validation import InputValidation
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 app.secret_key = secrets.token_hex(16)  # Generate a secure secret key
 
 class WebGameManager:
