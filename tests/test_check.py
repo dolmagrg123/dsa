@@ -1,3 +1,10 @@
+"""
+Author: DG
+Version: 2.0
+Date: August 2025
+Purpose: This file test the check.py file using unit test "
+"""
+
 import unittest
 import sys
 import os

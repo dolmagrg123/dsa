@@ -336,12 +336,12 @@ source ~/.bashrc
 
 ```bash
 # Make sure your virtual environment is activated
-# Windows: You should see (game_env) in prompt
-# macOS/Linux: You should see (game_env) in prompt
+# You should see (game_env) in prompt
 
+# Run the game in CLI
 python backend/main.py
 
-# Alternately for UI
+# Alternately, run the game in webpage
 
 python frontend/app.py
 ```
