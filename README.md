@@ -339,7 +339,7 @@ python backend/main.py
 
 # Alternately for UI
 
-python backend/app.py
+python frontend/app.py
 ```
 
 ### Step 8: Deactivate Virtual Environment (When Done)
@@ -433,7 +433,7 @@ python -c "import flask; print('Flask library installed successfully')"
 python backend/main.py
 
 # Test the web interface
-python backend/main.py
+python frontend/app.py
 # Then open http://localhost:5000 in your browse
 ```
 
@@ -456,7 +456,7 @@ You have two ways to enjoy the Mastermind Game:
 
 ### Web Interface (Recommended)
 
-1. **Start the server:** Execute `python backend/main.py` in your terminal
+1. **Start the server:** Execute `python frontend/app.py` in your terminal
 2. **Open your browser:** Navigate to `http://localhost:5000`
 3. **Configure game:** Use the intuitive interface to select mode and difficulty
 4. **Play interactively:** Click buttons, see real-time updates, and track your progress visually
