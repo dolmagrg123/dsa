@@ -126,6 +126,8 @@ Player guesses "0 1 5 6" → "3 correct numbers and 2 correct location"
    ```bash
    # Install Homebrew if not already installed
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+   # Add Homebrew to your PATH
    
    # Install Python
    brew install python
@@ -337,7 +339,7 @@ python backend/main.py
 
 # Alternately for UI
 
-python backend/main.py
+python backend/app.py
 ```
 
 ### Step 8: Deactivate Virtual Environment (When Done)
