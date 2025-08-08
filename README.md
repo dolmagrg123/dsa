@@ -202,13 +202,19 @@ sudo dnf install git
 ### Step 3: Clone the Repository
 
 ```bash
-https://github.com/dolmagrg123/mastermind-challenge
-cd mastermind
+git clone https://github.com/dolmagrg123/mastermind-challenge.git
+
 ```
 
 ### Step 4: Create Virtual Environment (Recommended)
 
 A virtual environment keeps your project dependencies isolated from system Python packages.
+
+#make sure you are in the project directory
+
+```bash
+cd mastermind-challenge
+```
 
 #### Windows
 
@@ -327,11 +333,11 @@ source ~/.bashrc
 # Windows: You should see (game_env) in prompt
 # macOS/Linux: You should see (game_env) in prompt
 
-python main.py
+python backend/main.py
 
 # Alternately for UI
 
-python app.py
+python backend/main.py
 ```
 
 ### Step 8: Deactivate Virtual Environment (When Done)
@@ -422,10 +428,10 @@ python -c "import requests; print('Requests library installed successfully')"
 python -c "import flask; print('Flask library installed successfully')"
 
 # Test the command-line game
-python main.py
+python backend/main.py
 
 # Test the web interface
-python app.py
+python backend/main.py
 # Then open http://localhost:5000 in your browse
 ```
 
@@ -441,14 +447,14 @@ You have two ways to enjoy the Mastermind Game:
 
 ### Command-Line Interface
 
-1. **Run the game:** Execute `python main.py` in your terminal
+1. **Run the game:** Execute `python backend/main.py` in your terminal
 2. **Choose game mode:** Select Single Player (vs Computer) or Multiplayer (Player vs Player)
 3. **Select difficulty:** Choose Easy (4 digits), Medium (8 digits), or Difficult (custom length)
 4. **Start guessing:** You have 10 attempts and 5 minutes to crack the code!
 
 ### Web Interface (Recommended)
 
-1. **Start the server:** Execute `python app.py` in your terminal
+1. **Start the server:** Execute `python backend/main.py` in your terminal
 2. **Open your browser:** Navigate to `http://localhost:5000`
 3. **Configure game:** Use the intuitive interface to select mode and difficulty
 4. **Play interactively:** Click buttons, see real-time updates, and track your progress visually
