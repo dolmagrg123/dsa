@@ -24,6 +24,7 @@ PLAN
 5. create another list to add the words in reverse
 6. use .join() method to add the words from the second list into the string
 
+IMPLEMENT
 '''
 
 def reverse_sentence(sentence):
