@@ -20,9 +20,8 @@ PLAN
 1. create function and take sentence string
 2. split the sentence and add to a list
 3. if len of list <=1 , return sentence
-4. create a new string
-5. create another list to add the words in reverse
-6. use .join() method to add the words from the second list into the string
+4. create another list to add the words in reverse
+5. use .join() method to add the words from the second list into the string
 
 IMPLEMENT
 '''
@@ -33,12 +32,10 @@ def reverse_sentence(sentence):
 
     if len(split_list) <= 1:
         return sentence
-    
-    return_string = " "
 
     reverse_list = split_list[::-1]
 
-    return_string = return_string.join(reverse_list)
+    return_string = " ".join(reverse_list)
 
     return return_string
 
